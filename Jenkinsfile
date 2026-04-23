@@ -19,13 +19,19 @@ pipeline {
             }
         }
 
+
         stage('Login to Docker Hub') {
-            steps {
-                withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
-                    sh 'echo $DOCKER_TOKEN | docker login -u adibhai --dckr_pat_n_MTIwRJEbSgjRbuZ_w-TqW7BI4'
+        steps {
+            script {
+            withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
+                sh '''
+                echo $DOCKER_TOKEN | docker login -u adibhai --dckr_pat_n_MTIwRJEbSgjRbuZ_w-TqW7BI4
+                '''
                 }
             }
         }
+    }
+        
 
         stage('Push to Docker Hub') {
             steps {
